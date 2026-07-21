@@ -1,0 +1,1487 @@
+{
+  "info": {
+    "_postman_id": "e7260c97-4b7a-4739-a0b9-a141757b5955",
+    "name": "Driving License",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "56527866",
+    "_collection_link": "https://go.postman.co/collection/50032578-e7260c97-4b7a-4739-a0b9-a141757b5955?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "Auth",
+      "item": [
+        {
+          "name": "SignUp",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"fullName\": \"Parth\",\n    \"phone\": \"81024191724\",\n    \"email\": \"parth1@gmail.com\",\n    \"password\": \"parth@123\",\n    \"role\": \"user\",\n    \"countryId\": \"6a4f2e3f0cfd70b690311c56\",\n    \"provinceId\": \"6a4f2ee20cfd70b690311c57\"\n  }",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{basurl}}/api/auth/signup",
+              "host": [
+                "{{basurl}}"
+              ],
+              "path": [
+                "api",
+                "auth",
+                "signup"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Login",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"emailOrPhone\": \"parth@gmail.com\",\n    \"password\": \"parth@123\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://192.168.0.15:5000/api/auth/login",
+              "protocol": "http",
+              "host": [
+                "192",
+                "168",
+                "0",
+                "15"
+              ],
+              "port": "5000",
+              "path": [
+                "api",
+                "auth",
+                "login"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get All User",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{basurl}}/api/auth/users",
+              "host": [
+                "{{basurl}}"
+              ],
+              "path": [
+                "api",
+                "auth",
+                "users"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Profile with Image Form Data",
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "fullName",
+                  "value": "Parth",
+                  "type": "text"
+                },
+                {
+                  "key": "phone",
+                  "value": "8102419174",
+                  "type": "text"
+                },
+                {
+                  "key": "email",
+                  "value": "parth1@gmail.com",
+                  "type": "text"
+                },
+                {
+                  "key": "provinceId",
+                  "value": "6a4c9caca641e7b4b3fbb326",
+                  "type": "text"
+                },
+                {
+                  "key": "countryId",
+                  "value": " 67a1b2c3d4e5f6a7b8c9d0e1",
+                  "type": "text"
+                },
+                {
+                  "type": "file",
+                  "key": "profileImage",
+                  "src": "/C:/Users/DELL/Downloads/download-_1_.png",
+                  "disabled": true
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{basurl}}/api/auth/users/6a4c8881cedb5e5a1623669d",
+              "host": [
+                "{{basurl}}"
+              ],
+              "path": [
+                "api",
+                "auth",
+                "users",
+                "6a4c8881cedb5e5a1623669d"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get User by user ID",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjZhNGM4ODgxY2VkYjVlNWExNjIzNjY5ZCIsInJvbGUiOiJ1c2VyIiwiaWF0IjoxNzgzNDA0NzQxLCJleHAiOjE3ODQwMDk1NDF9.PwSKJBN1gmxQmvr-FVt1tgPjG2DRjk7XovdLvZiQNDk",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{basurl}}/api/auth/users/6a4ca86ca641e7b4b3fbb327",
+              "host": [
+                "{{basurl}}"
+              ],
+              "path": [
+                "api",
+                "auth",
+                "users",
+                "6a4ca86ca641e7b4b3fbb327"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Province Master",
+      "item": [
+        {
+          "name": "Create Province",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "type": "text",
+                  "key": "name",
+                  "value": "Toronto"
+                },
+                {
+                  "type": "text",
+                  "key": "description",
+                  "value": "Toronto is a province"
+                },
+                {
+                  "type": "file",
+                  "key": "image",
+                  "src": "/C:/Users/DELL/Downloads/download (3).png"
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{basurl}}/api/province/create",
+              "host": [
+                "{{basurl}}"
+              ],
+              "path": [
+                "api",
+                "province",
+                "create"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get All Province",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://192.168.0.15:5000/api/province/all",
+              "protocol": "http",
+              "host": [
+                "192",
+                "168",
+                "0",
+                "15"
+              ],
+              "port": "5000",
+              "path": [
+                "api",
+                "province",
+                "all"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get by Province ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{basurl}}/api/province/6a4f2ee20cfd70b690311c57",
+              "host": [
+                "{{basurl}}"
+              ],
+              "path": [
+                "api",
+                "province",
+                "6a4f2ee20cfd70b690311c57"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Update Province",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"name\": \"   Nova Scotia\",\n    \"description\": \"Province\"\n  }",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{basurl}}/api/province/6a4f2ee20cfd70b690311c57",
+              "host": [
+                "{{basurl}}"
+              ],
+              "path": [
+                "api",
+                "province",
+                "6a4f2ee20cfd70b690311c57"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Delete Province",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{basurl}}/api/province/6a4c8103d625df7fd08befef",
+              "host": [
+                "{{basurl}}"
+              ],
+              "path": [
+                "api",
+                "province",
+                "6a4c8103d625df7fd08befef"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get by Country ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{basurl}}/api/province/country/6a4f2e3f0cfd70b690311c56",
+              "host": [
+                "{{basurl}}"
+              ],
+              "path": [
+                "api",
+                "province",
+                "country",
+                "6a4f2e3f0cfd70b690311c56"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Traffic Signs",
+      "item": [
+        {
+          "name": "Create Signs",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "type": "text",
+                  "key": "title",
+                  "value": "Sharp Curve Ahead"
+                },
+                {
+                  "type": "text",
+                  "key": "description",
+                  "value": "Warning for sharp curve ahead"
+                },
+                {
+                  "type": "text",
+                  "key": "categoryId",
+                  "value": "6a4c9519d06f21e14edd9237"
+                },
+                {
+                  "type": "text",
+                  "key": "provinceIds",
+                  "value": "6a4f2ee20cfd70b690311c57"
+                },
+                {
+                  "type": "file",
+                  "key": "image",
+                  "src": [
+                    "/C:/Users/DELL/Downloads/download (2).png",
+                    "/C:/Users/Vansh Jain/Downloads/31n61i1DXDL._AC_UF1000,1000_QL80_.jpg"
+                  ]
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{basurl}}/api/traffic-sign/create",
+              "host": [
+                "{{basurl}}"
+              ],
+              "path": [
+                "api",
+                "traffic-sign",
+                "create"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get All",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{basurl}}/api/traffic-sign/all",
+              "host": [
+                "{{basurl}}"
+              ],
+              "path": [
+                "api",
+                "traffic-sign",
+                "all"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get by Province Id",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{basurl}}/api/traffic-sign/province/6a4f2ee20cfd70b690311c57",
+              "host": [
+                "{{basurl}}"
+              ],
+              "path": [
+                "api",
+                "traffic-sign",
+                "province",
+                "6a4f2ee20cfd70b690311c57"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Update",
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "type": "text",
+                  "key": "title",
+                  "value": "Updated Stop Sign"
+                },
+                {
+                  "type": "text",
+                  "key": "description",
+                  "value": "Updated description."
+                },
+                {
+                  "type": "text",
+                  "key": "provinceIds",
+                  "value": "[\"6878d3c8f5d0c8c2d5f12345\"]"
+                },
+                {
+                  "type": "text",
+                  "key": "isActive",
+                  "value": "true"
+                },
+                {
+                  "type": "file",
+                  "key": "image",
+                  "src": "/C:/Users/DELL/Pictures/new-stop.png"
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{basurl}}/api/traffic-sign/6878d3c8f5d0c8c2d5f11111",
+              "host": [
+                "{{basurl}}"
+              ],
+              "path": [
+                "api",
+                "traffic-sign",
+                "6878d3c8f5d0c8c2d5f11111"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Delete",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{basurl}}/api/traffic-sign/6878d3c8f5d0c8c2d5f11111",
+              "host": [
+                "{{basurl}}"
+              ],
+              "path": [
+                "api",
+                "traffic-sign",
+                "6878d3c8f5d0c8c2d5f11111"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Traffic Signs Category",
+      "item": [
+        {
+          "name": "Create",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"name\": \"Road Signs\",\n    \"description\": \"Signs that warn about potential hazards on the road\"\n  }",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{basurl}}/api/categories/create",
+              "host": [
+                "{{basurl}}"
+              ],
+              "path": [
+                "api",
+                "categories",
+                "create"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get by Pagination 20",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{basurl}}/api/categories/all?page=1&limit=20",
+              "host": [
+                "{{basurl}}"
+              ],
+              "path": [
+                "api",
+                "categories",
+                "all"
+              ],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "1"
+                },
+                {
+                  "key": "limit",
+                  "value": "20"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get All",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{basurl}}/api/categories/all",
+              "host": [
+                "{{basurl}}"
+              ],
+              "path": [
+                "api",
+                "categories",
+                "all"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get by ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{basurl}}/api/categories/6a4c94fdd06f21e14edd9236",
+              "host": [
+                "{{basurl}}"
+              ],
+              "path": [
+                "api",
+                "categories",
+                "6a4c94fdd06f21e14edd9236"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Update",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "# Replace :id with actual category ID\ncurl -X PUT http://localhost:5000/api/categories/65f8a1b2c3d4e5f6a7b8c9d0 \\\n  -H \"Content-Type: application/json\" \\\n  -d '{\n    \"name\": \"Updated Warning Signs\",\n    \"description\": \"Updated description for warning signs\",\n    \"icon\": \"⚠️\",\n    \"isActive\": true\n  }'",
+              "hash": " Replace :id with actual category ID\ncurl -X PUT http://localhost:5000/api/categories/65f8a1b2c3d4e5f6a7b8c9d0 \\\n  -H \"Content-Type: application/json\" \\\n  -d '{\n    \"name\": \"Updated Warning Signs\",\n    \"description\": \"Updated description for warning signs\",\n    \"icon\": \"⚠️\",\n    \"isActive\": true\n  }'"
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Delete",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{basurl}}/api/categories/6a4c94fdd06f21e14edd9236",
+              "host": [
+                "{{basurl}}"
+              ],
+              "path": [
+                "api",
+                "categories",
+                "6a4c94fdd06f21e14edd9236"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Country",
+      "item": [
+        {
+          "name": "Create",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"name\": \"Canada\",\n    \"code\": \"CA\",\n    \"description\": \"Canadian Country\"\n  }",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{basurl}}/api/country/create",
+              "host": [
+                "{{basurl}}"
+              ],
+              "path": [
+                "api",
+                "country",
+                "create"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get country All",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://192.168.0.15:5000/api/country/all",
+              "protocol": "http",
+              "host": [
+                "192",
+                "168",
+                "0",
+                "15"
+              ],
+              "port": "5000",
+              "path": [
+                "api",
+                "country",
+                "all"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Update",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"name\": \"Pakistan\",\n    \"code\": \"PK\",\n    \"description\": \"Updated description\"\n  }",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{basurl}}/api/country/64f1a2b3c4d5e6f7a8b9c0d1",
+              "host": [
+                "{{basurl}}"
+              ],
+              "path": [
+                "api",
+                "country",
+                "64f1a2b3c4d5e6f7a8b9c0d1"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Delete",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{basurl}}/api/country/64f1a2b3c4d5e6f7a8b9c0d1",
+              "host": [
+                "{{basurl}}"
+              ],
+              "path": [
+                "api",
+                "country",
+                "64f1a2b3c4d5e6f7a8b9c0d1"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get by ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{basurl}}/api/country/6a4f2e3f0cfd70b690311c56",
+              "host": [
+                "{{basurl}}"
+              ],
+              "path": [
+                "api",
+                "country",
+                "6a4f2e3f0cfd70b690311c56"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Test Category",
+      "item": [
+        {
+          "name": "Create",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"title\": \"Road Signs\",\n    \"description\": \"Road Signs test for driving license\",\n    \"countryId\": \"6a4f2e3f0cfd70b690311c56\",\n    \"provinceId\": \"6a4f2ee20cfd70b690311c57\"\n  }",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{basurl}}/api/test-categories",
+              "host": [
+                "{{basurl}}"
+              ],
+              "path": [
+                "api",
+                "test-categories"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get All",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:5000/api/test-categories",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "5000",
+              "path": [
+                "api",
+                "test-categories"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get By Country id",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{basurl}}/api/test-categories?countryId=6a4f2e3f0cfd70b690311c56",
+              "host": [
+                "{{basurl}}"
+              ],
+              "path": [
+                "api",
+                "test-categories"
+              ],
+              "query": [
+                {
+                  "key": "countryId",
+                  "value": "6a4f2e3f0cfd70b690311c56"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get by Province ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://192.168.0.15:5000/api/test-categories?provinceId=6a4f2ee20cfd70b690311c57",
+              "protocol": "http",
+              "host": [
+                "192",
+                "168",
+                "0",
+                "15"
+              ],
+              "port": "5000",
+              "path": [
+                "api",
+                "test-categories"
+              ],
+              "query": [
+                {
+                  "key": "provinceId",
+                  "value": "6a4f2ee20cfd70b690311c57"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Delete",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{basurl}}/api/test-categories/65f123456789abcdef123458",
+              "host": [
+                "{{basurl}}"
+              ],
+              "path": [
+                "api",
+                "test-categories",
+                "65f123456789abcdef123458"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Update",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"title\": \"Advanced Theory Test\",\n    \"description\": \"Updated description for advanced theory test\",\n    \"isActive\": false\n  }",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{basurl}}/api/test-categories/65f123456789abcdef123458",
+              "host": [
+                "{{basurl}}"
+              ],
+              "path": [
+                "api",
+                "test-categories",
+                "65f123456789abcdef123458"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Question Bank",
+      "item": [
+        {
+          "name": "Create",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"title\": \"Theory Test Questions\",\n    \"description\": \"Basic theory test question bank\",\n    \"testCategoryId\": \"6a508fdd2142f9c1421aa61d\",\n    \"questions\": [\n      {\n        \"questionText\": \"What does a red traffic light mean?\",\n        \"options\": [\n          {\"text\": \"Go\", \"isCorrect\": false},\n          {\"text\": \"Stop\", \"isCorrect\": true},\n          {\"text\": \"Slow down\", \"isCorrect\": false},\n          {\"text\": \"Turn left\", \"isCorrect\": false}\n        ],\n        \"explanation\": \"Red means stop\",\n        \"marks\": 1\n      },\n      {\n        \"questionText\": \"What is the speed limit in residential areas?\",\n        \"options\": [\n          {\"text\": \"30 km/h\", \"isCorrect\": true},\n          {\"text\": \"50 km/h\", \"isCorrect\": false},\n          {\"text\": \"70 km/h\", \"isCorrect\": false},\n          {\"text\": \"90 km/h\", \"isCorrect\": false}\n        ],\n        \"explanation\": \"Residential areas have 30 km/h limit\",\n        \"marks\": 1\n      },\n      {\n        \"questionText\": \"When should you use turn signals?\",\n        \"options\": [\n          {\"text\": \"Only when turning\", \"isCorrect\": false},\n          {\"text\": \"When changing lanes\", \"isCorrect\": false},\n          {\"text\": \"Both turning and lane changes\", \"isCorrect\": true},\n          {\"text\": \"Never\", \"isCorrect\": false}\n        ],\n        \"explanation\": \"Use signals for turns and lane changes\",\n        \"marks\": 1\n      },\n      {\n        \"questionText\": \"What does a yellow traffic light mean?\",\n        \"options\": [\n          {\"text\": \"Stop immediately\", \"isCorrect\": false},\n          {\"text\": \"Prepare to stop\", \"isCorrect\": true},\n          {\"text\": \"Speed up\", \"isCorrect\": false},\n          {\"text\": \"Turn right\", \"isCorrect\": false}\n        ],\n        \"explanation\": \"Yellow means prepare to stop\",\n        \"marks\": 1\n      }\n    ]\n  }",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{basurl}}/api/question-banks",
+              "host": [
+                "{{basurl}}"
+              ],
+              "path": [
+                "api",
+                "question-banks"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get ALL",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://192.168.0.15:5000/api/question-banks",
+              "protocol": "http",
+              "host": [
+                "192",
+                "168",
+                "0",
+                "15"
+              ],
+              "port": "5000",
+              "path": [
+                "api",
+                "question-banks"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Test",
+      "item": [
+        {
+          "name": "Cretae",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"title\": \"Second Test By Admin \",\n    \"description\": \"Checking the Test\",\n    \"countryId\": \"6a4f2e3f0cfd70b690311c56\",\n    \"provinceId\": \"6a4f2ee20cfd70b690311c57\",\n    \"passingScore\": 1,\n    \"isPublished\": true,\n    \"categories\": [\n      {\n        \"categoryId\": \"6a5710cc31299415ca69f505\",\n        \"questionBankId\": \"6a5710eb31299415ca69f506\",\n        \"numberOfQuestions\": 1,\n        \"timer\": 10\n      }\n    ]\n  }",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://192.168.0.15:5000/api/tests",
+              "protocol": "http",
+              "host": [
+                "192",
+                "168",
+                "0",
+                "15"
+              ],
+              "port": "5000",
+              "path": [
+                "api",
+                "tests"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get ALL Test",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:5000/api/tests",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "5000",
+              "path": [
+                "api",
+                "tests"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Start",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"userId\":\"6a54808fab91681c47e79d99\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://192.168.0.15:5000/api/tests/6a5712bb31299415ca69f551/start",
+              "protocol": "http",
+              "host": [
+                "192",
+                "168",
+                "0",
+                "15"
+              ],
+              "port": "5000",
+              "path": [
+                "api",
+                "tests",
+                "6a5712bb31299415ca69f551",
+                "start"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "End",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"answers\": {\n      \"q1_id\": 1\n    },\n    \"timeTaken\": 15,\n    \"attemptId\": \"6a5867a6cf75b984aae182d5\",\n     \"userId\":\"6a54808fab91681c47e79d99\"\n  }",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://192.168.0.15:5000/api/tests/6a5712bb31299415ca69f551/submit",
+              "protocol": "http",
+              "host": [
+                "192",
+                "168",
+                "0",
+                "15"
+              ],
+              "port": "5000",
+              "path": [
+                "api",
+                "tests",
+                "6a5712bb31299415ca69f551",
+                "submit"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get By Province ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://192.168.0.15:5000/api/tests?provinceId=6a4f2ee20cfd70b690311c57",
+              "protocol": "http",
+              "host": [
+                "192",
+                "168",
+                "0",
+                "15"
+              ],
+              "port": "5000",
+              "path": [
+                "api",
+                "tests"
+              ],
+              "query": [
+                {
+                  "key": "provinceId",
+                  "value": "6a4f2ee20cfd70b690311c57"
+                }
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Practice test",
+      "item": [
+        {
+          "name": "Practice Tests Delete",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{basurl}}/api/practice-tests/65f8a1b2c3d4e5f6a7b8c9e1",
+              "host": [
+                "{{basurl}}"
+              ],
+              "path": [
+                "api",
+                "practice-tests",
+                "65f8a1b2c3d4e5f6a7b8c9e1"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Practice test Start",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"userId\":\"6a54808fab91681c47e79d99\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://192.168.0.15:5000/api/practice-tests/6a576fba77c0f32f9b57039f/start",
+              "protocol": "http",
+              "host": [
+                "192",
+                "168",
+                "0",
+                "15"
+              ],
+              "port": "5000",
+              "path": [
+                "api",
+                "practice-tests",
+                "6a576fba77c0f32f9b57039f",
+                "start"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Submit Practice",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"attemptId\": \"6a58737a755d09b27d9ecb55\",\n    \"userId\": \"6a54808fab91681c47e79d99\",\n    \"answers\": {\n      \"questionId1\": 0,\n      \"questionId2\": 2\n    },\n    \"timeTaken\": 300\n  }",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:5000/api/practice-tests/6a5712bb31299415ca69f551/submit",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "5000",
+              "path": [
+                "api",
+                "practice-tests",
+                "6a5712bb31299415ca69f551",
+                "submit"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Practice Test AttemptsEndpoint",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{basurl}}/api/practice-tests/65f8a1b2c3d4e5f6a7b8c9e1/attempts",
+              "host": [
+                "{{basurl}}"
+              ],
+              "path": [
+                "api",
+                "practice-tests",
+                "65f8a1b2c3d4e5f6a7b8c9e1",
+                "attempts"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Specific Practice Test AttemptEndpoint",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{basurl}}/api/practice-tests/65f8a1b2c3d4e5f6a7b8c9e1/attempts/65f8a1b2c3d4e5f6a7b8c9e2",
+              "host": [
+                "{{basurl}}"
+              ],
+              "path": [
+                "api",
+                "practice-tests",
+                "65f8a1b2c3d4e5f6a7b8c9e1",
+                "attempts",
+                "65f8a1b2c3d4e5f6a7b8c9e2"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Cretae",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"title\": \"Practice Driving Test - Category d\",\r\n  \"description\": \"Practice test for Category B driving license\",\r\n  \"countryId\": \"6a4f2e3f0cfd70b690311c56\",\r\n  \"provinceId\": \"6a4f2ee20cfd70b690311c57\",\r\n  \"passingScore\": 1,\r\n  \"isPublished\": true,\r\n  \"unlimitedAttempts\": true,\r\n  \"maxAttempts\": 0,\r\n  \"showAnswersImmediately\": true,\r\n  \"showExplanations\": true,\r\n  \"shuffleQuestions\": true,\r\n  \"shuffleOptions\": true,\r\n  \"allowReview\": true,\r\n  \"categories\": [\r\n    {\r\n      \"categoryId\": \"6a5710cc31299415ca69f505\",\r\n      \"questionBankId\": \"6a5710eb31299415ca69f506\",\r\n      \"numberOfQuestions\": 2,\r\n      \"timer\": 5\r\n    }\r\n  ]\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:5000/api/practice-tests",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "5000",
+              "path": [
+                "api",
+                "practice-tests"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get All",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{basurl}}/api/practice-tests",
+              "host": [
+                "{{basurl}}"
+              ],
+              "path": [
+                "api",
+                "practice-tests"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get by Province ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:5000/api/practice-tests/province/6a4f2ee20cfd70b690311c57",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "5000",
+              "path": [
+                "api",
+                "practice-tests",
+                "province",
+                "6a4f2ee20cfd70b690311c57"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "History",
+      "item": [
+        {
+          "name": "History of Practice Tests",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://192.168.0.15:5000/api/practice-tests/history/user/6a54808fab91681c47e79d99?limit=10&page=1",
+              "protocol": "http",
+              "host": [
+                "192",
+                "168",
+                "0",
+                "15"
+              ],
+              "port": "5000",
+              "path": [
+                "api",
+                "practice-tests",
+                "history",
+                "user",
+                "6a54808fab91681c47e79d99"
+              ],
+              "query": [
+                {
+                  "key": "limit",
+                  "value": "10"
+                },
+                {
+                  "key": "page",
+                  "value": "1"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "History of Tests",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://192.168.0.15:5000/api/tests/history/user/6a54808fab91681c47e79d99?limit=10&page=1",
+              "protocol": "http",
+              "host": [
+                "192",
+                "168",
+                "0",
+                "15"
+              ],
+              "port": "5000",
+              "path": [
+                "api",
+                "tests",
+                "history",
+                "user",
+                "6a54808fab91681c47e79d99"
+              ],
+              "query": [
+                {
+                  "key": "limit",
+                  "value": "10"
+                },
+                {
+                  "key": "page",
+                  "value": "1"
+                }
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Learning",
+      "item": [
+        {
+          "name": "Get by province Id",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://192.168.0.15:5000/api/question-banks/learning/province/6a4f2ee20cfd70b690311c57",
+              "protocol": "http",
+              "host": [
+                "192",
+                "168",
+                "0",
+                "15"
+              ],
+              "port": "5000",
+              "path": [
+                "api",
+                "question-banks",
+                "learning",
+                "province",
+                "6a4f2ee20cfd70b690311c57"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    }
+  ]
+}

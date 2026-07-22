@@ -248,115 +248,123 @@ export default function TestManagementPage() {
             )}
 
             {/* Tests List */}
-            {tests?.length === 0 ? (
-                <Card className="p-12 text-center">
-                    <div className="max-w-md mx-auto">
-                        <FileText className="h-12 w-12 text-gray-400 mx-auto mb-4" />
-                        <h3 className="text-lg font-medium text-gray-900">No tests found</h3>
-                        <p className="text-gray-500 mt-2">Create your first test to get started.</p>
-                        <Link to="/admin/tests/create">
-                            <Button className="mt-4">Create Test</Button>
-                        </Link>
-                    </div>
-                </Card>
-            ) : (
-                <>
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                        {paginatedTests?.map((test) => (
-                            <Card key={test.id} className="p-5 hover:shadow-lg transition-shadow">
-                                <div className="flex flex-col h-full">
-                                    <div className="flex items-start justify-between">
-                                        <div className="flex-1">
-                                            <div className="flex items-center gap-2">
-                                                <FileText className="h-5 w-5 text-blue-500 flex-shrink-0" />
-                                                <h3 className="font-semibold text-gray-900 truncate">{test.title}</h3>
-                                            </div>
-                                            {test.description && (
-                                                <p className="text-sm text-gray-500 mt-1 line-clamp-2">{test.description}</p>
-                                            )}
-                                            <div className="mt-2 space-y-1">
-                                                <p className="text-xs text-gray-400 flex items-center gap-1">
-                                                    <Globe className="h-3 w-3" />
-                                                    {test.countryId?.name || 'N/A'}
-                                                </p>
-                                                <p className="text-xs text-gray-400 flex items-center gap-1">
-                                                    <MapPin className="h-3 w-3" />
-                                                    {test.provinceId?.name || 'N/A'}
-                                                </p>
-                                            </div>
-                                        </div>
-                                        <div className="flex flex-col gap-1 ml-2">
-                                            {test.isPublished ? (
-                                                <Badge variant="success">Published</Badge>
-                                            ) : (
-                                                <Badge variant="warning">Draft</Badge>
-                                            )}
-                                        </div>
+           {/* Tests List */}
+{tests?.length === 0 ? (
+    <Card className="p-12 text-center">
+        <div className="max-w-md mx-auto">
+            <FileText className="h-12 w-12 text-gray-400 mx-auto mb-4" />
+            <h3 className="text-lg font-medium text-gray-900">No tests found</h3>
+            <p className="text-gray-500 mt-2">Create your first test to get started.</p>
+            <Link to="/admin/tests/create">
+                <Button className="mt-4">Create Test</Button>
+            </Link>
+        </div>
+    </Card>
+) : (
+    <>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            {paginatedTests?.map((test) => {
+                // ✅ Get the correct ID
+                const testId = test._id || test.id;
+                
+                return (
+                    <Card key={testId} className="p-5 hover:shadow-lg transition-shadow">
+                        <div className="flex flex-col h-full">
+                            <div className="flex items-start justify-between">
+                                <div className="flex-1">
+                                    <div className="flex items-center gap-2">
+                                        <FileText className="h-5 w-5 text-blue-500 flex-shrink-0" />
+                                        <h3 className="font-semibold text-gray-900 truncate">{test.title}</h3>
                                     </div>
-
-                                    <div className="mt-3 flex items-center gap-2 flex-wrap">
-                                        <Badge variant="info" className="flex items-center gap-1">
-                                            <BookOpen className="h-3 w-3" />
-                                            {test.totalQuestions || 0} Q
-                                        </Badge>
-                                        <Badge variant="primary" className="flex items-center gap-1">
-                                            <Clock className="h-3 w-3" />
-                                            {test.categories?.reduce((acc, cat) => acc + (cat.timer || 0), 0) || 0} min
-                                        </Badge>
-                                        <Badge variant={test.isActive ? 'success' : 'danger'}>
-                                            {test.isActive ? 'Active' : 'Inactive'}
-                                        </Badge>
-                                    </div>
-
-                                    <div className="mt-3 flex items-center gap-2">
-                                        <Link to={`/admin/tests/${test.id}`} className="flex-1">
-                                            <Button variant="outline" size="sm" className="w-full">
-                                                <Eye className="h-3 w-3 mr-1" />
-                                                View
-                                            </Button>
-                                        </Link>
-                                        <Link to={`/admin/tests/${test.id}/edit`}>
-                                            <Button variant="outline" size="sm">
-                                                <Edit className="h-3 w-3" />
-                                            </Button>
-                                        </Link>
-                                        <button
-                                            onClick={() => handleDelete(test.id)}
-                                            className="p-1.5 text-red-600 hover:bg-red-50 rounded-lg transition-colors"
-                                            title="Delete"
-                                        >
-                                            <Trash2 className="h-4 w-4" />
-                                        </button>
-                                    </div>
-
-                                    <div className="mt-2 text-xs text-gray-400">
-                                        Created: {new Date(test.createdAt).toLocaleDateString()}
+                                    {test.description && (
+                                        <p className="text-sm text-gray-500 mt-1 line-clamp-2">{test.description}</p>
+                                    )}
+                                    <div className="mt-2 space-y-1">
+                                        <p className="text-xs text-gray-400 flex items-center gap-1">
+                                            <Globe className="h-3 w-3" />
+                                            {test.countryId?.name || 'N/A'}
+                                        </p>
+                                        <p className="text-xs text-gray-400 flex items-center gap-1">
+                                            <MapPin className="h-3 w-3" />
+                                            {test.provinceId?.name || 'N/A'}
+                                        </p>
                                     </div>
                                 </div>
-                            </Card>
-                        ))}
-                    </div>
+                                <div className="flex flex-col gap-1 ml-2">
+                                    {test.isPublished ? (
+                                        <Badge variant="success">Published</Badge>
+                                    ) : (
+                                        <Badge variant="warning">Draft</Badge>
+                                    )}
+                                </div>
+                            </div>
 
-                    {/* Pagination */}
-                    {totalPages > 1 && (
-                        <div className="flex items-center justify-between">
-                            <p className="text-sm text-gray-500">
-                                Showing {((currentPage - 1) * itemsPerPage) + 1} to{' '}
-                                {Math.min(currentPage * itemsPerPage, tests?.length || 0)} of {tests?.length || 0} tests
-                            </p>
-                            <div className="flex items-center gap-2">
-                                <Button variant="outline" size="sm" onClick={() => setCurrentPage(p => Math.max(1, p - 1))} disabled={currentPage === 1}>
-                                    <ChevronLeft className="h-4 w-4" />
-                                </Button>
-                                <span className="text-sm text-gray-600">Page {currentPage} of {totalPages}</span>
-                                <Button variant="outline" size="sm" onClick={() => setCurrentPage(p => Math.min(totalPages, p + 1))} disabled={currentPage === totalPages}>
-                                    <ChevronRight className="h-4 w-4" />
-                                </Button>
+                            <div className="mt-3 flex items-center gap-2 flex-wrap">
+                                <Badge variant="info" className="flex items-center gap-1">
+                                    <BookOpen className="h-3 w-3" />
+                                    {test.totalQuestions || 0} Q
+                                </Badge>
+                                <Badge variant="primary" className="flex items-center gap-1">
+                                    <Clock className="h-3 w-3" />
+                                    {test.categories?.reduce((acc, cat) => acc + (cat.timer || 0), 0) || 0} min
+                                </Badge>
+                                <Badge variant={test.isActive ? 'success' : 'danger'}>
+                                    {test.isActive ? 'Active' : 'Inactive'}
+                                </Badge>
+                            </div>
+
+                            <div className="mt-3 flex items-center gap-2">
+                                {/* ✅ Fixed: use testId */}
+                                <Link to={`/admin/tests/${testId}`} className="flex-1">
+                                    <Button variant="outline" size="sm" className="w-full">
+                                        <Eye className="h-3 w-3 mr-1" />
+                                        View
+                                    </Button>
+                                </Link>
+                                {/* ✅ Fixed: use testId */}
+                                <Link to={`/admin/tests/${testId}/edit`}>
+                                    <Button variant="outline" size="sm">
+                                        <Edit className="h-3 w-3" />
+                                    </Button>
+                                </Link>
+                                <button
+                                    onClick={() => handleDelete(testId)}
+                                    className="p-1.5 text-red-600 hover:bg-red-50 rounded-lg transition-colors"
+                                    title="Delete"
+                                >
+                                    <Trash2 className="h-4 w-4" />
+                                </button>
+                            </div>
+
+                            <div className="mt-2 text-xs text-gray-400">
+                                Created: {new Date(test.createdAt).toLocaleDateString()}
                             </div>
                         </div>
-                    )}
-                </>
-            )}
+                    </Card>
+                );
+            })}
+        </div>
+
+        {/* Pagination - unchanged */}
+        {totalPages > 1 && (
+            <div className="flex items-center justify-between">
+                <p className="text-sm text-gray-500">
+                    Showing {((currentPage - 1) * itemsPerPage) + 1} to{' '}
+                    {Math.min(currentPage * itemsPerPage, tests?.length || 0)} of {tests?.length || 0} tests
+                </p>
+                <div className="flex items-center gap-2">
+                    <Button variant="outline" size="sm" onClick={() => setCurrentPage(p => Math.max(1, p - 1))} disabled={currentPage === 1}>
+                        <ChevronLeft className="h-4 w-4" />
+                    </Button>
+                    <span className="text-sm text-gray-600">Page {currentPage} of {totalPages}</span>
+                    <Button variant="outline" size="sm" onClick={() => setCurrentPage(p => Math.min(totalPages, p + 1))} disabled={currentPage === totalPages}>
+                        <ChevronRight className="h-4 w-4" />
+                    </Button>
+                </div>
+            </div>
+        )}
+    </>
+)}
         </div>
     );
 }

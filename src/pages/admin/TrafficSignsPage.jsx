@@ -12,6 +12,7 @@ import { Button } from '../../components/ui/Button';
 import { trafficSignService } from '../../services/trafficSignService';
 import { categoryService } from '../../services/categoryService';
 import { provinceService } from '../../services/provinceService';
+import { useAuthStore } from '../../store/authStore'; // ✅ Added
 
 function useDebounce(value, delay) {
     const [debouncedValue, setDebouncedValue] = useState(value);
@@ -23,6 +24,11 @@ function useDebounce(value, delay) {
 }
 
 export default function TrafficSignsPage() {
+    const { user } = useAuthStore(); // ✅ Added
+    const isAdmin = user?.role === 'admin';
+    const isSuperAdmin = user?.role === 'super_admin';
+    const adminProvinceId = user?.provinceId?._id || user?.provinceId?.id || user?.provinceId;
+
     const queryClient = useQueryClient();
     const [searchTerm, setSearchTerm] = useState('');
     const [debouncedSearchTerm, setDebouncedSearchTerm] = useState('');
@@ -42,7 +48,6 @@ export default function TrafficSignsPage() {
         setCurrentPage(1);
     }, [debouncedSearch]);
 
-    // Fetch categories for filter
     const { data: categories } = useQuery({
         queryKey: ['traffic-categories'],
         queryFn: categoryService.getAll,
@@ -51,7 +56,6 @@ export default function TrafficSignsPage() {
         staleTime: 60 * 1000,
     });
 
-    // Fetch provinces for filter
     const { data: provinces } = useQuery({
         queryKey: ['provinces-all'],
         queryFn: provinceService.getAll,
@@ -60,26 +64,29 @@ export default function TrafficSignsPage() {
         staleTime: 60 * 1000,
     });
 
-    // Fetch traffic signs
+    // ✅ Modified query – conditionally fetch based on role
     const { data: signs, isLoading, refetch, isFetching, error: queryError } = useQuery({
-        queryKey: ['traffic-signs', debouncedSearchTerm, filters],
+        queryKey: ['traffic-signs', debouncedSearchTerm, filters, isAdmin, adminProvinceId],
         queryFn: async () => {
             try {
                 let allSigns = [];
-
-                // If province filter is applied, use the province-specific endpoint
-                if (filters.provinceId) {
-                    allSigns = await trafficSignService.getByProvince(filters.provinceId);
+                if (isAdmin) {
+                    // Admin: only signs from their province
+                    if (adminProvinceId) {
+                        allSigns = await trafficSignService.getByProvince(adminProvinceId);
+                    } else {
+                        allSigns = [];
+                    }
                 } else {
+                    // Super Admin: all signs, with possible filters
                     allSigns = await trafficSignService.getAll();
                 }
-
-                console.log('All signs received:', allSigns);
 
                 if (!Array.isArray(allSigns)) {
                     allSigns = [];
                 }
 
+                // Apply search filter (common)
                 if (debouncedSearchTerm) {
                     const searchLower = debouncedSearchTerm.toLowerCase();
                     allSigns = allSigns.filter(sign =>
@@ -88,10 +95,24 @@ export default function TrafficSignsPage() {
                     );
                 }
 
+                // Apply category filter (common)
                 if (filters.categoryId) {
                     allSigns = allSigns.filter(sign => {
                         const categoryId = sign.categoryId?._id || sign.categoryId || '';
                         return String(categoryId) === String(filters.categoryId);
+                    });
+                }
+
+                // Province filter is only relevant for super admin
+                // (but we already filtered for admin)
+                if (isSuperAdmin && filters.provinceId) {
+                    allSigns = allSigns.filter(sign => {
+                        // Check if sign has provinceIds array
+                        const signProvinceIds = sign.provinceIds || [];
+                        if (Array.isArray(signProvinceIds)) {
+                            return signProvinceIds.some(id => String(id) === String(filters.provinceId));
+                        }
+                        return false;
                     });
                 }
 
@@ -109,7 +130,6 @@ export default function TrafficSignsPage() {
         staleTime: 0,
     });
 
-    // Delete mutation
     const deleteMutation = useMutation({
         mutationFn: trafficSignService.delete,
         onSuccess: () => {
@@ -124,7 +144,6 @@ export default function TrafficSignsPage() {
         },
     });
 
-    // Toggle status mutation
     const toggleStatusMutation = useMutation({
         mutationFn: trafficSignService.toggleStatus,
         onSuccess: () => {
@@ -160,30 +179,24 @@ export default function TrafficSignsPage() {
         return searchTerm !== '' || filters.categoryId !== '' || filters.provinceId !== '';
     };
 
-    // ✅ Fix: Get category name - handles both string and object
     const getCategoryName = (category) => {
         if (!category) return 'N/A';
         if (typeof category === 'object') {
             return category.name || 'N/A';
         }
-        // If it's a string ID, look it up
         const found = categories?.find(c => String(c._id) === String(category));
         return found?.name || 'N/A';
     };
 
-    // ✅ Fix: Get province names - handles array of objects
     const getProvinceNames = (provinceIds) => {
         if (!provinceIds || provinceIds.length === 0) return 'N/A';
-
         const names = provinceIds.map(province => {
             if (typeof province === 'object') {
                 return province.name || 'Unknown';
             }
-            // If it's a string ID, look it up
             const found = provinces?.find(p => String(p._id) === String(province));
             return found?.name || 'Unknown';
         });
-
         return names.join(', ');
     };
 
@@ -213,13 +226,28 @@ export default function TrafficSignsPage() {
     const totalPages = Math.ceil((signs?.length || 0) / itemsPerPage);
     const paginatedSigns = signs?.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage);
 
+    // ✅ If admin has no province, show a message instead of empty list
+    if (isAdmin && !adminProvinceId) {
+        return (
+            <Card className="p-12 text-center">
+                <div className="max-w-md mx-auto">
+                    <MapPin className="h-12 w-12 text-gray-400 mx-auto mb-4" />
+                    <h3 className="text-lg font-medium text-gray-900">No province assigned</h3>
+                    <p className="text-gray-500 mt-2">Please contact your Super Admin to assign you a province.</p>
+                </div>
+            </Card>
+        );
+    }
+
     return (
         <div className="space-y-6">
             {/* Header */}
             <div className="flex items-center justify-between">
                 <div>
                     <h1 className="text-2xl font-bold text-gray-900">Traffic Signs</h1>
-                    <p className="text-gray-500 mt-1">Manage traffic signs for the system</p>
+                    <p className="text-gray-500 mt-1">
+                        {isAdmin ? 'Traffic signs for your province' : 'Manage traffic signs for the system'}
+                    </p>
                 </div>
                 <Link to="/admin/traffic-signs/create">
                     <Button className="flex items-center gap-2">
@@ -295,24 +323,27 @@ export default function TrafficSignsPage() {
                                 ))}
                             </select>
                         </div>
-                        <div>
-                            <label className="block text-sm font-medium text-gray-700 mb-2">Province</label>
-                            <select
-                                value={filters.provinceId}
-                                onChange={(e) => {
-                                    setFilters({ ...filters, provinceId: e.target.value });
-                                    setCurrentPage(1);
-                                }}
-                                className="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-50"
-                            >
-                                <option value="">All Provinces</option>
-                                {provinces?.map((province) => (
-                                    <option key={province._id} value={province._id}>
-                                        {province.name}
-                                    </option>
-                                ))}
-                            </select>
-                        </div>
+                        {/* ✅ Province filter only for Super Admin */}
+                        {isSuperAdmin && (
+                            <div>
+                                <label className="block text-sm font-medium text-gray-700 mb-2">Province</label>
+                                <select
+                                    value={filters.provinceId}
+                                    onChange={(e) => {
+                                        setFilters({ ...filters, provinceId: e.target.value });
+                                        setCurrentPage(1);
+                                    }}
+                                    className="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-50"
+                                >
+                                    <option value="">All Provinces</option>
+                                    {provinces?.map((province) => (
+                                        <option key={province._id} value={province._id}>
+                                            {province.name}
+                                        </option>
+                                    ))}
+                                </select>
+                            </div>
+                        )}
                     </div>
                     <div className="flex justify-end mt-4">
                         <Button variant="outline" size="sm" onClick={() => setShowFilters(false)}>
@@ -342,7 +373,7 @@ export default function TrafficSignsPage() {
                             </button>
                         </span>
                     )}
-                    {filters.provinceId && (
+                    {isSuperAdmin && filters.provinceId && (
                         <span className="inline-flex items-center gap-1 px-2 py-1 bg-blue-50 text-blue-700 rounded-lg text-xs">
                             Province: {getProvinceNames([filters.provinceId])}
                             <button onClick={() => setFilters({ ...filters, provinceId: '' })} className="hover:text-blue-900">
@@ -359,7 +390,11 @@ export default function TrafficSignsPage() {
                     <div className="max-w-md mx-auto">
                         <FileText className="h-12 w-12 text-gray-400 mx-auto mb-4" />
                         <h3 className="text-lg font-medium text-gray-900">No traffic signs found</h3>
-                        <p className="text-gray-500 mt-2">Create your first traffic sign to get started.</p>
+                        <p className="text-gray-500 mt-2">
+                            {isAdmin
+                                ? 'Your province has no traffic signs yet.'
+                                : 'Create your first traffic sign to get started.'}
+                        </p>
                         <Link to="/admin/traffic-signs/create">
                             <Button className="mt-4">Add Traffic Sign</Button>
                         </Link>

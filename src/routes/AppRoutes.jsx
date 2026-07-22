@@ -107,6 +107,8 @@ export default function AppRoutes() {
                     <Route path={ROUTES.ADMIN.PRACTICE_TESTS_CREATE} element={<CreateEditPracticeTestPage />} />
                     <Route path={ROUTES.ADMIN.PRACTICE_TESTS_EDIT} element={<CreateEditPracticeTestPage />} />
                     <Route path={ROUTES.ADMIN.TEST_DETAIL} element={<TestDetailPage />} />
+                    <Route path={ROUTES.ADMIN.PROVINCES} element={<Provinces />} />
+<Route path={ROUTES.ADMIN.TRAFFIC_SIGNS} element={<TrafficSignsPage />} />
 
                 </Route>
 

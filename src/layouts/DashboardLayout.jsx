@@ -20,8 +20,10 @@ const userNavigation = [
 const adminNavigation = [
     { name: 'Dashboard', href: ROUTES.ADMIN.DASHBOARD, icon: LayoutDashboard },
     { name: 'Users', href: ROUTES.ADMIN.USERS, icon: Users },
-    { name: 'Province Master', href: ROUTES.ADMIN.STATES, icon: Flag },
-    { name: 'Traffic Signs', href: ROUTES.ADMIN.QUESTIONS, icon: FileText },
+    // { name: 'Province Master', href: ROUTES.ADMIN.STATES, icon: Flag },
+    // { name: 'Traffic Signs', href: ROUTES.ADMIN.QUESTIONS, icon: FileText },
+    { name: 'Provinces', href: ROUTES.ADMIN.PROVINCES, icon: MapPin },
+    { name: 'Traffic Signs', href: ROUTES.ADMIN.TRAFFIC_SIGNS, icon: FileText },
     { name: 'Question Banks', href: ROUTES.ADMIN.QUESTION_BANKS, icon: BookOpen },
     { name: 'Test Management', href: ROUTES.ADMIN.TESTS, icon: FileText },
     { name: 'Profile', href: ROUTES.PROFILE, icon: User },

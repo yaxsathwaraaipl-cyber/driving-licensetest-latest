@@ -288,7 +288,7 @@ export default function TestDetailPage() {
                                     Edit Test
                                 </Button>
                             </Link>
-                            <Button variant="outline" className="w-full justify-start" disabled>
+                            <Button variant="outline" className="w-full justify-start" >
                                 <BarChart3 className="h-4 w-4 mr-2" />
                                 View Detailed Analytics
                             </Button>

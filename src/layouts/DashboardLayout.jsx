@@ -4,16 +4,27 @@ import {
     LayoutDashboard, BookOpen, BarChart3, User, Settings, LogOut,
     Menu, X, Bell, ChevronDown, GraduationCap, Users, HelpCircle,
     Flag, FileText, Shield, UserCog, List, Globe, MapPin,
+    Book,
 } from 'lucide-react';
 import { useAuthStore } from '../store/authStore';
 import { ROUTES } from '../constants';
 
 // ✅ User Navigation (Regular Users)
+// const userNavigation = [
+//     { name: 'Dashboard', href: ROUTES.DASHBOARD, icon: LayoutDashboard },
+//     { name: 'Practice', href: ROUTES.PRACTICE, icon: BookOpen },
+//     { name: 'Results', href: ROUTES.RESULTS, icon: BarChart3 },
+//     { name: 'Profile', href: ROUTES.PROFILE, icon: User },
+// ];
+
 const userNavigation = [
     { name: 'Dashboard', href: ROUTES.DASHBOARD, icon: LayoutDashboard },
-    { name: 'Practice', href: ROUTES.PRACTICE, icon: BookOpen },
+    { name: 'Traffic Signs', href: ROUTES.USER.TRAFFIC_SIGNS, icon: FileText },  // ✅ Fixed
+    { name: 'Study Materials', href: ROUTES.USER.MATERIALS, icon: Book },
+    { name: 'Practice Tests', href: ROUTES.PRACTICE_TESTS, icon: BookOpen },     // ✅ Keep this
+    { name: 'Tests', href: ROUTES.USER.TESTS, icon: BookOpen },  
     { name: 'Results', href: ROUTES.RESULTS, icon: BarChart3 },
-    { name: 'Profile', href: ROUTES.PROFILE, icon: User },
+    { name: 'Profile', href: ROUTES.USER.PROFILE, icon: User },  // ✅ Fixed
 ];
 
 // ✅ Admin Navigation
